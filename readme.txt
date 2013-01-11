@@ -1,5 +1,5 @@
-Mna - Version 1.0.1
-Copyright (C) 2012, Petros Kyladitis
+Mna - Version 1.2.0
+Copyright (C) 2012-2013, Petros Kyladitis
 
 
 Description
@@ -20,11 +20,23 @@ in wich you have priviliges to write.
 For more info, updates etc. visit <http://www.multipetros.gr/>
 
 
+What's new
+==========
+- Selection for the Precision of the result, with 2, 4, 6 & 8 decimal digits.
+- Network traffic minimized, by determine when need to retrieve fresh data.
+- OSX UI improvements.
+- Code reliability improvements.
+
+
 UI Shortcuts
 ============
 Enter  : Start the convertion. Same with press the "Convert" button.
 Ctrl+Q : Quits the program.
 F1     : Show the About box.
+Ctrl+2 : Set convertion's precision to 2 decimal digits.
+Ctrl+4 : Set convertion's precision to 4 decimal digits.
+Ctrl+6 : Set convertion's precision to 6 decimal digits.
+Ctrl+8 : Set convertion's precision to 8 decimal digits.
 
 
 Lisence
