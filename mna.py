@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 #
 # Mna - A Currency Converter program
-# Copyright (c) 2012, Petros Kyladitis <http://www.multipetros.gr/>
+# Copyright (c) 2012-2013, Petros Kyladitis <http://www.multipetros.gr/>
 # This is free software, distributed under the FreeBSD Lisence
 
 import wx
+import webbrowser
+import ConfigParser
 from wx.lib.wordwrap import wordwrap
 from urllib2 import urlopen
-import ConfigParser
 from sys import platform
 
 class MainFrame(wx.Frame):
@@ -16,6 +17,10 @@ class MainFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         # All GCalc API supported currencies
         currencies=["Algerian Dinar (DZD)", "Argentine Peso (ARS)", "Australian Dollar (AUD)", "Bahraini Dinar (BHD)", "Bolivian Boliviano (BOB)", "Botswanan Pula (BWP)", "Brazilian Real (BRL)", "British Pound Sterling (GBP)", "Brunei Dollar (BND)", "Bulgarian Lev (BGN)", "Canadian Dollar (CAD)", "Cayman Islands Dollar (KYD)", "Chilean Peso (CLP)", "Chinese Yuan (CNY)", "Colombian Peso (COP)", "Costa Rican Coln (CRC)", "Croatian Kuna (HRK)", "Czech Republic Koruna (CZK)", "Danish Krone (DKK)", "Dominican Peso (DOP)", "Egyptian Pound (EGP)", "Estonian Kroon (EEK)", "Euro (EUR)", "Fijian Dollar (FJD)", "FYROM Denar (MKD)", "Honduran Lempira (HNL)", "Hong Kong Dollar (HKD)", "Hungarian Forint (HUF)", "Indian Rupee (INR)", "Israeli New Sheqel (ILS)", "Jamaican Dollar (JMD)", "Japanese Yen (JPY)", "Jordanian Dinar (JOD)", "Kazakhstani Tenge (KZT)", "Kenyan Shilling (KES)", "Kuwaiti Dinar (KWD)", "Latvian Lats (LVL)", "Lebanese Pound (LBP)", "Lithuanian Litas (LTL)", "Malaysian Ringgit (MYR)", "Mauritian Rupee (MUR)", "Mexican Peso (MXN)", "Moldovan Leu (MDL)", "Moroccan Dirham (MAD)", "Namibian Dollar (NAD)", "Nepalese Rupee (NPR)", "Netherlands Antillean Guilder (ANG)", "New Taiwan Dollar (TWD)", "New Zealand Dollar (NZD)", "Nicaraguan Crdoba (NIO)", "Nigerian Naira (NGN)", "Norwegian Krone (NOK)", "Omani Rial (OMR)", "Pakistani Rupee (PKR)", "Papua New Guinean Kina (PGK)", "Paraguayan Guarani (PYG)", "Peruvian Nuevo Sol (PEN)", "Philippine Peso (PHP)", "Polish Zloty (PLN)", "Qatari Rial (QAR)", "Romanian Leu (RON)", "Russian Ruble (RUB)", "Salvadoran Coln (SVC)", "Saudi Riyal (SAR)", "Serbian Dinar (RSD)", "Seychellois Rupee (SCR)", "Sierra Leonean Leone (SLL)", "Singapore Dollar (SGD)", "Slovak Koruna (SKK)", "South African Rand (ZAR)", "South Korean Won (KRW)", "Sri Lankan Rupee (LKR)", "Swedish Krona (SEK)", "Swiss Franc (CHF)", "Tanzanian Shilling (TZS)", "Thai Baht (THB)", "Trinidad and Tobago Dollar (TTD)", "Tunisian Dinar (TND)", "Turkish Lira (TRY)", "UAE Dirham (AED)", "Ugandan Shilling (UGX)", "Ukrainian Hryvnia (UAH)", "Uruguayan Peso (UYU)", "US Dollar (USD)", "Uzbekistan Som (UZS)", "Venezuelan Bolvar (VEF)", "Yemeni Rial (YER)"]
+
+        # General constants
+        self.PRODUCT = "Mna"
+        self.VERSION = "1.2.0"
 
         # Ini name, section, parameters
         self.INI_FILE = "mna.cfg"
@@ -66,6 +71,8 @@ class MainFrame(wx.Frame):
         self.menu_precision.AppendItem(self.menu_item_eight_decs)
         self.frame_main_menubar.Append(self.menu_precision, "&Precision")
         self.menu_help = wx.Menu()
+        self.menu_item_updates = wx.MenuItem(self.menu_help, wx.NewId(), "&Check for updates\tCtrl+U", "Check if newer versions exist", wx.ITEM_NORMAL)
+        self.menu_help.AppendItem(self.menu_item_updates)
         self.menu_item_about = wx.MenuItem(self.menu_help, wx.ID_ABOUT, "&About\tF1", "Show about info", wx.ITEM_NORMAL)
         self.menu_help.AppendItem(self.menu_item_about)
         self.frame_main_menubar.Append(self.menu_help, "&Help")
@@ -85,11 +92,12 @@ class MainFrame(wx.Frame):
         if platform != "darwin":
             self.Bind(wx.EVT_MENU, self.OnExit, self.menu_item_exit)
         self.Bind(wx.EVT_CLOSE, self.OnExit)
-        self.Bind(wx.EVT_MENU, self.OnAbout, self.menu_item_about)
         self.Bind(wx.EVT_MENU, self.OnPrecisionChange, self.menu_item_two_decs)
         self.Bind(wx.EVT_MENU, self.OnPrecisionChange, self.menu_item_four_decs)
         self.Bind(wx.EVT_MENU, self.OnPrecisionChange, self.menu_item_six_decs)
         self.Bind(wx.EVT_MENU, self.OnPrecisionChange, self.menu_item_eight_decs)
+        self.Bind(wx.EVT_MENU, self.OnUpdates, self.menu_item_updates)
+        self.Bind(wx.EVT_MENU, self.OnAbout, self.menu_item_about)
         # Bind event handler for double click on status bar
         self.statusbar.Bind(wx.EVT_LEFT_DCLICK, self.OnDblClickStatus, self.statusbar)
 
@@ -211,12 +219,69 @@ class MainFrame(wx.Frame):
         self.Destroy()
 
 
+    def GetUpdateInfo(self, productName):
+        # Retrieve update info from server in the format: x.y.z,url://to.this.version
+        # and if new version exist, prompt user to browse to this url, else infom
+        # that no new version is available.
+        try:
+            # Read data from the server, passing the product name.
+            # Split retrieved data in 2 parts, 1st is the version, 2nd is the url and
+            # set the variables stripped. Then check if new version exist & handle it.
+            updateInfo = urlopen("http://multipetros.gr/ucs/?product=" + str.lower(productName)).read()
+            updateInfoArray = updateInfo.split(",",2)
+            updateVer = updateInfoArray[0].strip()
+            updateUrl = updateInfoArray[1].strip()
+            if self.CheckUpdate(self.VERSION, updateVer) == True:
+                if platform == "win32":
+                    # Because of Windows 7 don't appear question icon, show info icon instead
+                    wxIcon =  wx.ICON_INFORMATION
+                else:
+                    wxIcon = wx.ICON_QUESTION
+                answer = wx.MessageBox("You are running " + self.PRODUCT + " version " + self.VERSION + "\nThe updated version " + updateVer + " is available.\nDo you want to visit website for downloading it?", "Update available", wx.YES_NO | wx.YES_DEFAULT | wxIcon)
+                if answer == wx.YES:
+                    webbrowser.open_new(updateUrl)
+                else:
+                    return
+            else:
+                wx.MessageBox("There are no updates available. It seems you running the latest version", "No update", wx.OK | wx.ICON_INFORMATION)
+        except Exception as details:
+            wx.MessageBox("Can't retrieve update info because of: " + str(details), "Error", wx.OK | wx.ICON_ERROR)
+
+
+    def CheckUpdate(self, currentVer, serverVer):
+        # From curent version string and server version string, formated
+        # as x.y.z (major.minor.revision), check any new version exist
+        currentVersionArray = currentVer.split(".",3)
+        serverVersionArray = serverVer.split(".",3)
+        try:
+               currentMajor = int(currentVersionArray[0])
+               currentMinor = int(currentVersionArray[1])
+               currentRevision = int(currentVersionArray[2])
+               serverMajor = int(serverVersionArray[0])
+               serverMinor = int(serverVersionArray[1])
+               serverRevision = int(serverVersionArray[2])
+        except:
+           return False
+        if serverMajor > currentMajor:
+           return True
+        elif serverMajor == currentMajor and serverMinor > currentMinor:
+           return True
+        elif serverMajor == currentMajor and serverMinor == currentMinor and serverRevision > currentRevision:
+           return True
+        else:
+           return False
+
+    def OnUpdates(self, event):
+        #Determinate if any update exist and handle it
+        self.GetUpdateInfo(self.PRODUCT)
+
+
     def OnAbout(self, event):
         # create and show an about dialog box
         info = wx.AboutDialogInfo()
         info.SetName("Mna Currency Converter")
-        info.SetVersion("1.2.0")
-        info.SetCopyright("Copyright (C) 2012, Petros Kyladitis")
+        info.SetVersion(self.VERSION)
+        info.SetCopyright("Copyright (C) 2012-2013, Petros Kyladitis")
         info.Description = wordwrap("A currency converter program for Python, using wxPython for the GUI and urllib2 library with Google Calculator service API to retrieve updated data.", 350, wx.ClientDC(self))
         info.SetWebSite("http://www.multipetros.gr")
         info.License = wordwrap("This program is free software, distributed under the terms and conditions of the FreeBSD License. For full licensing info see the \"license.txt\" file, distributed with this program", 350, wx.ClientDC(self))

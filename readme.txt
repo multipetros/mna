@@ -1,4 +1,4 @@
-Mna - Version 1.2.0
+Mna - Version 1.4.0
 Copyright (C) 2012-2013, Petros Kyladitis
 
 
@@ -22,6 +22,7 @@ For more info, updates etc. visit <http://www.multipetros.gr/>
 
 What's new
 ==========
+- On-line check for available updated version
 - Selection for the Precision of the result, with 2, 4, 6 & 8 decimal digits.
 - Network traffic minimized, by determine when need to retrieve fresh data.
 - OSX UI improvements.
@@ -32,11 +33,12 @@ UI Shortcuts
 ============
 Enter  : Start the convertion. Same with press the "Convert" button.
 Ctrl+Q : Quits the program.
-F1     : Show the About box.
 Ctrl+2 : Set convertion's precision to 2 decimal digits.
 Ctrl+4 : Set convertion's precision to 4 decimal digits.
 Ctrl+6 : Set convertion's precision to 6 decimal digits.
 Ctrl+8 : Set convertion's precision to 8 decimal digits.
+Ctrl+U : Check for updates.
+F1     : Show the About box.
 
 
 Lisence
@@ -44,6 +46,26 @@ Lisence
 Mna is free software, distributed under the terms and conditions of the FreeBSD
 License. For full licensing info see the "license.txt" file, distributed with 
 this program.
+
+
+What does the word mna?
+=======================
+The Mna is a unit of measurement of mass (subdivision of talent) used in ancient
+years. Coins of precious metal weighing one mna, also used as currency.
+
+First subdivision of the talent to mna does the peoples of Mesopotamia, originally
+represented 1/50, but later changed to 1/60. The Greeks adopted the second ratio. 
+An Attic mna of the classical era weighed 433 grams today.
+
+Currency divisions in ancient Greece:
+- 60 Mnai worth one Talent.
+- 1 Mna amounted to 100 Drachmas*.
+- 1 Drachma corresponded 6 Obols.
+- 1 Obol corresponded 8 Coppers.
+
+*(Etymologically Drachma means coin that can be caught by hand, as opposed to the 
+unwieldy mna that weighed almost a half kilo. The silver drachma was the main 
+currency of ancient Greece.)
 
 
 Supported currencies
