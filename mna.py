@@ -20,7 +20,7 @@ class MainFrame(wx.Frame):
 
         # General constants
         self.PRODUCT = "Mna"
-        self.VERSION = "1.2.0"
+        self.VERSION = "1.4.0"
 
         # Ini name, section, parameters
         self.INI_FILE = "mna.cfg"
