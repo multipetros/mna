@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # Mna - A Currency Converter program
-# Copyright (c) 2012-2013, Petros Kyladitis <http://www.multipetros.gr/>
+# Copyright (c) 2012-2015, Petros Kyladitis <http://www.multipetros.gr/>
 # This is free software, distributed under the FreeBSD Lisence
 
 import wx
@@ -16,11 +16,11 @@ class MainFrame(wx.Frame):
 
     def __init__(self, *args, **kwds):
         # All GCalc API supported currencies
-        currencies=["Algerian Dinar (DZD)", "Argentine Peso (ARS)", "Australian Dollar (AUD)", "Bahraini Dinar (BHD)", "Bolivian Boliviano (BOB)", "Botswanan Pula (BWP)", "Brazilian Real (BRL)", "British Pound Sterling (GBP)", "Brunei Dollar (BND)", "Bulgarian Lev (BGN)", "Canadian Dollar (CAD)", "Cayman Islands Dollar (KYD)", "Chilean Peso (CLP)", "Chinese Yuan (CNY)", "Colombian Peso (COP)", "Costa Rican Coln (CRC)", "Croatian Kuna (HRK)", "Czech Republic Koruna (CZK)", "Danish Krone (DKK)", "Dominican Peso (DOP)", "Egyptian Pound (EGP)", "Estonian Kroon (EEK)", "Euro (EUR)", "Fijian Dollar (FJD)", "FYROM Denar (MKD)", "Honduran Lempira (HNL)", "Hong Kong Dollar (HKD)", "Hungarian Forint (HUF)", "Indian Rupee (INR)", "Israeli New Sheqel (ILS)", "Jamaican Dollar (JMD)", "Japanese Yen (JPY)", "Jordanian Dinar (JOD)", "Kazakhstani Tenge (KZT)", "Kenyan Shilling (KES)", "Kuwaiti Dinar (KWD)", "Latvian Lats (LVL)", "Lebanese Pound (LBP)", "Lithuanian Litas (LTL)", "Malaysian Ringgit (MYR)", "Mauritian Rupee (MUR)", "Mexican Peso (MXN)", "Moldovan Leu (MDL)", "Moroccan Dirham (MAD)", "Namibian Dollar (NAD)", "Nepalese Rupee (NPR)", "Netherlands Antillean Guilder (ANG)", "New Taiwan Dollar (TWD)", "New Zealand Dollar (NZD)", "Nicaraguan Crdoba (NIO)", "Nigerian Naira (NGN)", "Norwegian Krone (NOK)", "Omani Rial (OMR)", "Pakistani Rupee (PKR)", "Papua New Guinean Kina (PGK)", "Paraguayan Guarani (PYG)", "Peruvian Nuevo Sol (PEN)", "Philippine Peso (PHP)", "Polish Zloty (PLN)", "Qatari Rial (QAR)", "Romanian Leu (RON)", "Russian Ruble (RUB)", "Salvadoran Coln (SVC)", "Saudi Riyal (SAR)", "Serbian Dinar (RSD)", "Seychellois Rupee (SCR)", "Sierra Leonean Leone (SLL)", "Singapore Dollar (SGD)", "Slovak Koruna (SKK)", "South African Rand (ZAR)", "South Korean Won (KRW)", "Sri Lankan Rupee (LKR)", "Swedish Krona (SEK)", "Swiss Franc (CHF)", "Tanzanian Shilling (TZS)", "Thai Baht (THB)", "Trinidad and Tobago Dollar (TTD)", "Tunisian Dinar (TND)", "Turkish Lira (TRY)", "UAE Dirham (AED)", "Ugandan Shilling (UGX)", "Ukrainian Hryvnia (UAH)", "Uruguayan Peso (UYU)", "US Dollar (USD)", "Uzbekistan Som (UZS)", "Venezuelan Bolvar (VEF)", "Yemeni Rial (YER)"]
+        currencies=["Afghan Afghani (AFN)", "Albanian Lek (ALL)", "Algerian Dinar (DZD)", "Angolan Kwanza (AOA)", "Argentine Peso (ARS)", "Armenian Dram (AMD)", "Aruban Florin (AWG)", "Australian Dollar (AUD)", "Azerbaijani Manat (AZN)", "Bahamian Dollar (BSD)", "Bahraini Dinar (BHD)", "Bangladeshi Taka (BDT)", "Barbadian Dollar (BBD)", "Belarusian Ruble (BYR)", "Belize Dollar (BZD)", "Bermudan Dollar (BMD)", "Bhutanese Ngultrum (BTN)", "Bitcoin (BTC)", "Bolivian Boliviano (BOB)", "Bosnia-Herzegovina Convertible Mark (BAM)", "Botswanan Pula (BWP)", "Brazilian Real (BRL)", "British Pound (GBP)", "Brunei Dollar (BND)", "Bulgarian Lev (BGN)", "Burundian Franc (BIF)", "Cambodian Riel (KHR)", "Canadian Dollar (CAD)", "Cape Verdean Escudo (CVE)", "Cayman Islands Dollar (KYD)", "Central African CFA Franc (XAF)", "CFP Franc (XPF)", "Chilean Peso (CLP)", "Chilean Unit of Account (CLF)", "Chinese Yuan (CNY)", "CNH (CNH)", "Colombian Peso (COP)", "Comorian Franc (KMF)", "Congolese Franc (CDF)", "Costa Rican Colon (CRC)", "Croatian Kuna (HRK)", "Cuban Peso (CUP)", "Czech Republic Koruna (CZK)", "Danish Krone (DKK)", "Djiboutian Franc (DJF)", "Dominican Peso (DOP)", "East Caribbean Dollar (XCD)", "Egyptian Pound (EGP)", "Eritrean Nakfa (ERN)", "Ethiopian Birr (ETB)", "Euro (EUR)", "Falkland Islands Pound (FKP)", "Fijian Dollar (FJD)", "FYROM Denar (MKD)", "Gambian Dalasi (GMD)", "Georgian Lari (GEL)", "Ghanaian Cedi (GHS)", "Gibraltar Pound (GIP)", "Guatemalan Quetzal (GTQ)", "Guinean Franc (GNF)", "Guyanaese Dollar (GYD)", "Haitian Gourde (HTG)", "Honduran Lempira (HNL)", "Hong Kong Dollar (HKD)", "Hungarian Forint (HUF)", "Icelandic Krona (ISK)", "Indian Rupee (INR)", "Indonesian Rupiah (IDR)", "Iranian Rial (IRR)", "Iraqi Dinar (IQD)", "Israeli New Sheqel (ILS)", "Jamaican Dollar (JMD)", "Japanese Yen (JPY)", "Jordanian Dinar (JOD)", "Kazakhstani Tenge (KZT)", "Kenyan Shilling (KES)", "Kuwaiti Dinar (KWD)", "Kyrgystani Som (KGS)", "Laotian Kip (LAK)", "Lebanese Pound (LBP)", "Lesotho Loti (LSL)", "Liberian Dollar (LRD)", "Libyan Dinar (LYD)", "Macanese Pataca (MOP)", "Malagasy Ariary (MGA)", "Malawian Kwacha (MWK)", "Malaysian Ringgit (MYR)", "Maldivian Rufiyaa (MVR)", "Mauritanian Ouguiya (MRO)", "Mauritian Rupee (MUR)", "Mexican Peso (MXN)", "Moldovan Leu (MDL)", "Mongolian Tugrik (MNT)", "Moroccan Dirham (MAD)", "Mozambican Metical (MZN)", "Myanmar Kyat (MMK)", "Namibian Dollar (NAD)", "Nepalese Rupee (NPR)", "Netherlands Antillean Guilder (ANG)", "New Taiwan Dollar (TWD)", "New Zealand Dollar (NZD)", "Nicaraguan Cordoba (NIO)", "Nigerian Naira (NGN)", "North Korean Won (KPW)", "Norwegian Krone (NOK)", "Omani Rial (OMR)", "Pakistani Rupee (PKR)", "Panamanian Balboa (PAB)", "Papua New Guinean Kina (PGK)", "Paraguayan Guarani (PYG)", "Peruvian Nuevo Sol (PEN)", "Philippine Peso (PHP)", "PKG (PKG)", "Polish Zloty (PLN)", "Qatari Rial (QAR)", "Romanian Leu (RON)", "Russian Ruble (RUB)", "Rwandan Franc (RWF)", "Salvadoran Colon (SVC)", "Samoan Tala (WST)", "Sao Tome & Principe Dobra (STD)", "Saudi Riyal (SAR)", "Serbian Dinar (RSD)", "Seychellois Rupee (SCR)", "Sierra Leonean Leone (SLL)", "Singapore Dollar (SGD)", "Solomon Islands Dollar (SBD)", "Somali Shilling (SOS)", "South African Rand (ZAR)", "South Korean Won (KRW)", "Special Drawing Rights (XDR)", "Sri Lankan Rupee (LKR)", "St. Helena Pound (SHP)", "Sudanese Pound (SDG)", "Surinamese Dollar (SRD)", "Swazi Lilangeni (SZL)", "Swedish Krona (SEK)", "Swiss Franc (CHF)", "Syrian Pound (SYP)", "Tajikistani Somoni (TJS)", "Tanzanian Shilling (TZS)", "Thai Baht (THB)", "Tongan Paanga (TOP)", "Trinidad & Tobago Dollar (TTD)", "Tunisian Dinar (TND)", "Turkish Lira (TRY)", "Turkmenistani Manat (TMT)", "Ugandan Shilling (UGX)", "Ukrainian Hryvnia (UAH)", "United Arab Emirates Dirham (AED)", "Uruguayan Peso (UYU)", "US Dollar (USD)", "Uzbekistani Som (UZS)", "Vanuatu Vatu (VUV)", "Venezuelan Bolivar (VEF)", "Vietnamese Dong (VND)", "West African CFA Franc (XOF)", "Yemeni Rial (YER)", "Zambian Kwacha (ZMW)", "Zimbabwean Dollar (ZWL)"]
 
         # General constants
         self.PRODUCT = "Mna"
-        self.VERSION = "1.4.0"
+        self.VERSION = "1.5.0"
 
         # Ini name, section, parameters
         self.INI_FILE = "mna.cfg"
@@ -36,7 +36,7 @@ class MainFrame(wx.Frame):
 
         kwds["style"] = wx.CAPTION | wx.CLOSE_BOX | wx.MINIMIZE_BOX | wx.SYSTEM_MENU | wx.TAB_TRAVERSAL | wx.CLIP_CHILDREN | wx.RESIZE_BORDER
         wx.Frame.__init__(self, *args, **kwds)
-
+        
         # Main frame controls
         self.label_from = wx.StaticText(self, -1, "From")
         self.combo_box_from = wx.ComboBox(self, -1, choices=currencies, style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
@@ -120,7 +120,7 @@ class MainFrame(wx.Frame):
             self.combo_box_to.SetSelection(long(config.get(self.INI_SECTION, self.INI_PARAM_TO)))
         except:
             self.current_precision = 2
-            self.combo_box_from.SetSelection(83)
+            self.combo_box_from.SetSelection(151)
             self.combo_box_to.SetSelection(22)        
 
         # Start-up values, used to determinate selection changes at the program's exit
@@ -224,10 +224,10 @@ class MainFrame(wx.Frame):
         # and if new version exist, prompt user to browse to this url, else infom
         # that no new version is available.
         try:
-            # Read data from the server, passing the product name.
+            # Read data from last.ver on the master branch
             # Split retrieved data in 2 parts, 1st is the version, 2nd is the url and
             # set the variables stripped. Then check if new version exist & handle it.
-            updateInfo = urlopen("http://multipetros.gr/ucs/?product=" + str.lower(productName)).read()
+            updateInfo = urlopen("https://raw.githubusercontent.com/multipetros/mna/master/last.ver").read()
             updateInfoArray = updateInfo.split(",",2)
             updateVer = updateInfoArray[0].strip()
             updateUrl = updateInfoArray[1].strip()
@@ -281,8 +281,8 @@ class MainFrame(wx.Frame):
         info = wx.AboutDialogInfo()
         info.SetName("Mna Currency Converter")
         info.SetVersion(self.VERSION)
-        info.SetCopyright("Copyright (C) 2012-2013, Petros Kyladitis")
-        info.Description = wordwrap("A currency converter program for Python, using wxPython for the GUI and urllib2 library with Google Calculator service API to retrieve updated data.", 350, wx.ClientDC(self))
+        info.SetCopyright("Copyright (C) 2012-2015, Petros Kyladitis")
+        info.Description = wordwrap("A currency converter program for Python, using wxPython for the GUI and urllib2 library with Google Finance service to retrieve updated exchange data.", 350, wx.ClientDC(self))
         info.SetWebSite("http://www.multipetros.gr")
         info.License = wordwrap("This program is free software, distributed under the terms and conditions of the FreeBSD License. For full licensing info see the \"license.txt\" file, distributed with this program", 350, wx.ClientDC(self))
         info.SetIcon(self.ico) # Declared at self.__set_properties()
@@ -328,20 +328,28 @@ class MainFrame(wx.Frame):
             from_cur_name = self.combo_box_from.Value[(self.combo_box_from.Value.find("(")+1):self.combo_box_from.Value.find(")")]
             to_cur_name = self.combo_box_to.Value[(self.combo_box_to.Value.find("(")+1):self.combo_box_to.Value.find(")")]
 
-            # Read the returned string from the Google Calc service, when passing the above cur names
-            # the returned string looks like {lhs: "1 U.S. dollar",rhs: "0.758495146 Euros",error: "",icc: true}
-            # or {lhs: "",rhs: "",error: "4",icc: false} when an error occured
-            # So, try to parse the value after the rhs: " and before the next space wich represend the exchange rate
-            # and use it to calculate the result. Or error, show the exception message to the status bar.
+            # Read the returned data from the Google Fiance service, when passing the above cur names
+            # in the returned page the converter string looks like "<span class=bld>123 CUR</span>"
+            # or no "<span class=bld>" element exist, but a "Could not convert" string.
+            # So, try to find the "<span class=bld>" node, parse the value after that and use it to 
+            #calculate the result. Or error, show the exception message to the status bar.
             try:
                 self.SetStatusText("Retrieving data. Please wait...")
-                gcalc_currency = urlopen("http://www.google.com/ig/calculator?hl=en&q=" + from_cur_name + "%3D%3F" + to_cur_name).read()
-                gcalc_currency_start = gcalc_currency.find("rhs: \"") + 6
+                gcalc_currency = urlopen("http://www.google.com/finance/converter?a=1&from=" + from_cur_name + "&to=" + to_cur_name).read()
+                start_str = "<span class=bld>"
+                gcalc_currency_start = gcalc_currency.find(start_str) + len(start_str)
+                #if no connection error, but Google Finance could not convert this
+                if(gcalc_currency_start-len(start_str) == -1):
+                    cant_convertion_msg = gcalc_currency.find("Could not convert")
+                    if(cant_convertion_msg != -1):
+                        self.SetStatusText("Google Finance, could not convert this.")
+                        self.current_currency = 0 # To force retrieve data at the next DoConvertion(False) callr
+                        return
                 gcalc_currency_end = gcalc_currency.find(" ", gcalc_currency_start)
                 self.current_currency = float(gcalc_currency[gcalc_currency_start:gcalc_currency_end])
                 self.SetStatusText("Exchange rate: 1 " + from_cur_name + " = " + str(self.current_currency) + " " + to_cur_name)
             except Exception as details:
-                self.SetStatusText("Can\'t retrieve data from Google Calc Service. " + str(details))
+                self.SetStatusText("Can\'t retrieve data from Google Finance. " + str(details))
                 self.current_currency = 0 # To force retrieve data at the next DoConvertion(False) call
                 return
 
