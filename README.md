@@ -1,4 +1,4 @@
-#Mna - Version 1.5.0
+#Mna - Version 1.5.1
 Copyright (C) 2012-2015, Petros Kyladitis
 
 
@@ -21,13 +21,18 @@ For more info, updates etc. visit <http://www.multipetros.gr/>
 
 ## What's new
 
+### v1.5.1
+- Fix OSX error due to wxPython library.
+- Store configuration file at user's home dir on Unix like systems
+  and at current user %AppData%  dir on MS Windows systems.
+
 ### v1.5
 - Now uses the Google Finance service to retrieve updated data.
 - 160 currencies supported.
-- Update Service now reflects on Github repository
+- Update Service now reflects on Github repository.
 
 ### v1.4
-- On-line check for available updated version
+- On-line check for available updated version.
 - Selection for the Precision of the result, with 2, 4, 6 & 8 decimal digits.
 - Network traffic minimized, by determine when need to retrieve fresh data.
 - OSX UI improvements.

@@ -11,6 +11,8 @@ import ConfigParser
 from wx.lib.wordwrap import wordwrap
 from urllib2 import urlopen
 from sys import platform
+from os.path import expanduser
+from os import getenv
 
 class MainFrame(wx.Frame):
 
@@ -20,10 +22,13 @@ class MainFrame(wx.Frame):
 
         # General constants
         self.PRODUCT = "Mna"
-        self.VERSION = "1.5.0"
+        self.VERSION = "1.5.1"
 
-        # Ini name, section, parameters
-        self.INI_FILE = "mna.cfg"
+        # Ini path, section, parameters
+        if platform == "win32":
+            self.INI_FILE = getenv('APPDATA') + "\\mna.cfg"
+        else:
+            self.INI_FILE = expanduser("~/.mna.cfg")
         self.INI_SECTION = "main"
         self.INI_PARAM_FROM = "from"
         self.INI_PARAM_TO = "to"
@@ -44,7 +49,7 @@ class MainFrame(wx.Frame):
         self.text_ctrl_from = wx.TextCtrl(self, -1, "")
         self.text_ctrl_from.SetToolTip(wx.ToolTip("Ammount you want to convert"))
         self.label_to = wx.StaticText(self, -1, "To")
-        self.combo_box_to = wx.ComboBox(self, -1, choices=currencies, style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY | wx.CB_SORT)
+        self.combo_box_to = wx.ComboBox(self, -1, choices=currencies, style=wx.CB_DROPDOWN | wx.CB_DROPDOWN | wx.CB_READONLY)
         self.combo_box_to.SetToolTip(wx.ToolTip("Select the currency you want to convert to"))
         self.text_ctrl_to = wx.TextCtrl(self, -1, "", style=wx.TE_READONLY)
         self.text_ctrl_to.SetToolTip(wx.ToolTip("Converted ammount"))
